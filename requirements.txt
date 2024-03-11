@@ -1,10 +1,15 @@
 omegaconf==2.3.0
 Pillow==10.1.0
 einops==0.7.0
+# Use the '-e' flag for editable installs of git repositories if necessary
+-e git+https://github.com/tatsy/torchmcubes.git#egg=torchmcubes
 transformers==4.35.0
 trimesh==4.0.5
 rembg
 huggingface-hub
 imageio[ffmpeg]
 Flask==2.0.1
+# Specifying Werkzeug version for compatibility
+Werkzeug==2.0.1
 requests
+uuid
