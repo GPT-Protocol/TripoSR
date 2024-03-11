@@ -38,7 +38,8 @@ def process_image():
 
     # Check if the .obj file exists, and return it
     if os.path.exists(obj_file_path):
-        return send_file(obj_file_path, as_attachment=True)
+        response = send_file(obj_file_path, as_attachment=True, attachment_filename="output.obj", mimetype='application/octet-stream')
+        return response
     else:
         # Handle the case where the .obj file does not exist
         return "Output file not found.", 404
