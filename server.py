@@ -22,7 +22,6 @@ def process_image():
     os.makedirs(output_dir_base, exist_ok=True)
 
     input_path = os.path.join(input_dir, image_name)
-    output_path = os.path.join(output_dir_base, "0")  # Assuming processing script creates this subdirectory
 
     # Download the image
     response = requests.get(image_url)
@@ -32,10 +31,10 @@ def process_image():
 
     # Process the image
     # Note: Modify your command to reflect the correct processing script and parameters
-    os.system(f"python run.py {input_path} --output-dir {output_path}")
+    os.system(f"python run.py {input_path} --output-dir {output_dir_base}")
 
     # Define the expected output .obj file path
-    obj_file_path = os.path.join(output_path, "mesh.obj")
+    obj_file_path = os.path.join(output_dir_base, "0", "mesh.obj")
 
     # Check if the .obj file exists, and return it
     if os.path.exists(obj_file_path):
