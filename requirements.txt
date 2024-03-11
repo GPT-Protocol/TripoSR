@@ -13,3 +13,4 @@ Flask==2.0.1
 Werkzeug==2.0.1
 requests
 uuid
+gunicorn==20.0.4

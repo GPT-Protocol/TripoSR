@@ -1,4 +1,4 @@
-# Use an official Python runtime as a parent image
+# Use an official Python runtime as the parent image
 FROM python:3.8-slim
 
 # Set the working directory in the container to /app
@@ -8,16 +8,13 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Define environment variable
+# Define environment variable to specify the Flask app
 ENV FLASK_APP=server.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=5000
 
-# Run Flask application
-CMD ["flask", "run"]
+# Run Flask application using the production server gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "server:app"]
