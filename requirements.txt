@@ -6,4 +6,5 @@ trimesh==4.0.5
 rembg
 huggingface-hub
 imageio[ffmpeg]
-flask
+Flask==2.0.1
+requests
