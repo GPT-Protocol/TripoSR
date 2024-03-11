@@ -11,7 +11,12 @@ def process_image():
     # Extract image URL from the request
     image_url = request.json['image_url']
     image_name = secure_filename(image_url.split('/')[-1])
-    input_path = os.path.join('inputs', image_name)
+
+    # Ensure the inputs directory exists
+    input_dir = 'inputs'
+    os.makedirs(input_dir, exist_ok=True)
+
+    input_path = os.path.join(input_dir, image_name)
     output_path = 'output/'
 
     # Download the image
@@ -26,6 +31,8 @@ def process_image():
     # For simplicity, assuming single output file named `mesh.obj`
     # Adjust according to your actual output
     output_file = os.path.join(output_path, 'mesh.obj')
+
+    # Ensure the output directory exists or handle the scenario appropriately
 
     # Return the processed file
     return send_file(output_file, as_attachment=True)
