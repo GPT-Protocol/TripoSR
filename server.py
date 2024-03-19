@@ -3,8 +3,14 @@ import requests
 import os
 from werkzeug.utils import secure_filename
 import uuid
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+
+# This is a very permissive setting; you should limit origins in a production app
+CORS(app, resources={r"/process": {"origins": "*"}})
+
 
 @app.route('/process', methods=['POST'])
 def process_image():
@@ -38,11 +44,13 @@ def process_image():
 
     # Check if the .obj file exists, and return it
     if os.path.exists(obj_file_path):
-        response = send_file(obj_file_path, as_attachment=True, attachment_filename="output.obj", mimetype='application/octet-stream')
+        response = send_file(obj_file_path, as_attachment=True,
+                             attachment_filename="output.obj", mimetype='application/octet-stream')
         return response
     else:
         # Handle the case where the .obj file does not exist
         return "Output file not found.", 404
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
