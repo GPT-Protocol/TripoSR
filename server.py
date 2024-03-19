@@ -4,6 +4,7 @@ import os
 from werkzeug.utils import secure_filename
 import uuid
 from flask_cors import CORS
+import base64
 
 
 app = Flask(__name__)
@@ -17,9 +18,13 @@ def process_image():
     # Generate a unique ID for this request
     unique_id = str(uuid.uuid4())
 
-    # Extract image URL from the request
-    image_url = request.json['image_url']
-    image_name = secure_filename(image_url.split('/')[-1])
+    # Extract the Base64 encoded image data from the request
+    image_data = request.json['image']
+    if image_data.startswith('data:image'):  # Strip the prefix if it's present
+        image_data = image_data.split(',')[1]
+
+    # Decode the Base64 string
+    image_bytes = base64.b64decode(image_data)
 
     # Create directories for inputs and outputs based on unique_id
     input_dir = os.path.join('inputs', unique_id)
@@ -27,16 +32,13 @@ def process_image():
     os.makedirs(input_dir, exist_ok=True)
     os.makedirs(output_dir_base, exist_ok=True)
 
-    input_path = os.path.join(input_dir, image_name)
-
-    # Download the image
-    response = requests.get(image_url)
-    if response.status_code == 200:
-        with open(input_path, 'wb') as f:
-            f.write(response.content)
+    # Save the decoded image as a file
+    input_path = os.path.join(input_dir, f"{unique_id}.png")
+    with open(input_path, 'wb') as f:
+        f.write(image_bytes)
 
     # Process the image
-    # Note: Modify your command to reflect the correct processing script and parameters
+    # Modify your command to reflect the correct processing script and parameters
     os.system(f"python run.py {input_path} --output-dir {output_dir_base}")
 
     # Define the expected output .obj file path
