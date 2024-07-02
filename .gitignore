@@ -162,3 +162,6 @@ cython_debug/
 # default output directory
 output/
 outputs/
+
+# Input directory with images sent by the user
+inputs/
