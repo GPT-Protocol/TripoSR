@@ -1,6 +1,8 @@
 from minio import Minio
 from os import environ
+from dotenv import load_dotenv
 
+load_dotenv()
 minio_client = Minio(environ["MINIO_ENDPOINT"],
     access_key=environ["MINIO_ACCESS_KEY"],
     secret_key=environ["MINIO_SECRET_KEY"],

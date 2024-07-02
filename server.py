@@ -44,8 +44,9 @@ def process_image():
     # Define the expected output .obj file path
     obj_file_path = os.path.join(output_dir_base, "0", "mesh.obj")
 
+    obj_name = unique_id + ".obj"
     # Store the generated object on minio
-    minio_client.fput_object(minio_bucket_name, "{unique_id}.obj", obj_file_path)
+    minio_client.fput_object(minio_bucket_name, obj_name, obj_file_path)
     
     # Check if the .obj file exists, and return it
     if os.path.exists(obj_file_path):
