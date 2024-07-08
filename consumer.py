@@ -3,17 +3,17 @@ import os
 import uuid
 import base64
 import json
-from minio_client import minio_client, minio_bucket_name
+from minio_client import minio_client, minio_bucket_name, minio_generated_3d_assets_bucket
 from dotenv import load_dotenv
 
 load_dotenv()
 AMQP_URL = os.environ["AMQP_URL"]
 
-def process_image(image_name, channel, method):
+def process_image(image_name, channel, method) -> None:
     # Decode the Base64 string
     try:
-        response = minio_client.get_object('test1', image_name)
-        image_data = base64.b64encode(response.read()).decode('utf-8')
+        image_response = minio_client.get_object(bucket_name=minio_bucket_name, object_name=image_name)
+        image_data = base64.b64encode(image_response.read()).decode('utf-8')
         image_bytes = base64.b64decode(image_data)
 
         # Create directories for inputs and outputs based on unique_id
@@ -35,7 +35,7 @@ def process_image(image_name, channel, method):
 
         obj_file_name = image_name.split(".")[0] + ".obj"
         # Store the generated object on minio
-        minio_client.fput_object(minio_bucket_name, obj_file_name, obj_file_path)
+        minio_client.fput_object(bucket_name=minio_generated_3d_assets_bucket, object_name=obj_file_name, file_path=obj_file_path)
         print("Obj file uploaded to minio", obj_file_name)
         channel.basic_ack(delivery_tag=method.delivery_tag)
     except Exception as e:

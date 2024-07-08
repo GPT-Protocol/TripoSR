@@ -9,3 +9,4 @@ minio_client = Minio(environ["MINIO_ENDPOINT"],
 )
 
 minio_bucket_name = "test1"
+minio_generated_3d_assets_bucket="generated-3d-assets"
