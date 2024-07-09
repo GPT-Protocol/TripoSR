@@ -18,3 +18,6 @@ Flask-Cors==4.0.0
 minio
 python-dotenv
 pika
+sqlalchemy
+psycopg2
+psycopg2-binary
