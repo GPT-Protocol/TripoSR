@@ -19,5 +19,4 @@ minio
 python-dotenv
 pika
 sqlalchemy
-psycopg2
 psycopg2-binary
