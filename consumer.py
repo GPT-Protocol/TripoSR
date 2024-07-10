@@ -38,9 +38,10 @@ def process_image(image_name, channel, method) -> None:
         image_data = base64.b64encode(image_response.read()).decode('utf-8')
         image_bytes = base64.b64decode(image_data)
 
+        image_uuid = image_name.split(".")[0]
         # Create directories for inputs and outputs based on unique_id
-        input_dir = os.path.join('inputs', image_name)
-        output_dir_base = os.path.join('output')
+        input_dir = os.path.join('inputs', image_uuid)
+        output_dir_base = os.path.join('outputs', image_uuid)
 
         os.makedirs(input_dir, exist_ok=True)
         os.makedirs(output_dir_base, exist_ok=True)
