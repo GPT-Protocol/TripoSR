@@ -15,3 +15,8 @@ requests
 uuid
 gunicorn==20.0.4
 Flask-Cors==4.0.0
+minio
+python-dotenv
+pika
+sqlalchemy
+psycopg2-binary

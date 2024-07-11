@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import uuid
 from flask_cors import CORS
 import base64
-
+from minio_client import minio_client, minio_bucket_name
 
 app = Flask(__name__)
 
@@ -44,6 +44,10 @@ def process_image():
     # Define the expected output .obj file path
     obj_file_path = os.path.join(output_dir_base, "0", "mesh.obj")
 
+    obj_name = unique_id + ".obj"
+    # Store the generated object on minio
+    minio_client.fput_object(minio_bucket_name, obj_name, obj_file_path)
+    
     # Check if the .obj file exists, and return it
     if os.path.exists(obj_file_path):
         response = send_file(obj_file_path, as_attachment=True,
