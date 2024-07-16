@@ -57,7 +57,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--chunk-size",
-    default=8192,
+    default=16384,
     type=int,
     help="Evaluation chunk size for surface extraction and rendering. Smaller chunk size reduces VRAM usage but increases computation time. 0 for no chunking. Default: 8192",
 )
