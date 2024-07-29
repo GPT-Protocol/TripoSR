@@ -39,7 +39,7 @@ def process_image():
 
     # Process the image
     # Modify your command to reflect the correct processing script and parameters
-    os.system(f"python run.py {input_path} --output-dir {output_dir_base}")
+    os.system(f"/usr/bin/python3.9 /app/TripoSR/run.py {input_path} --output-dir {output_dir_base}")
 
     # Define the expected output .obj file path
     obj_file_path = os.path.join(output_dir_base, "0", "mesh.obj")
