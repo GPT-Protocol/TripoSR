@@ -6,6 +6,7 @@ load_dotenv()
 minio_client = Minio(environ["MINIO_ENDPOINT"],
     access_key=environ["MINIO_ACCESS_KEY"],
     secret_key=environ["MINIO_SECRET_KEY"],
+    secure=False
 )
 
 minio_bucket_name = "test1"
